@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: react-app-deployment
+  labels:
+    app: react-app
+spec:
+  replicas: 3  # Number of Pods to run
+  selector:
+    matchLabels:
+      app: react-app
+  template:
+    metadata:
+      labels:
+        app: react-app
+    spec:
+      containers:
+      - name: react-app
+        image: itoncu/my-react-app:latest  # Your Docker image
+        ports:
+        - containerPort: 80  # Port where Nginx is serving the app
+apiVersion: v1
+kind: Service
+metadata:
+  name: react-app-service
+spec:
+  selector:
+    app: react-app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80  # Port exposed by the container
+  type: LoadBalancer  # Use LoadBalancer if on cloud, or NodePort for local setups
+
