@@ -1,35 +1,10 @@
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: react-app-deployment
-  labels:
-    app: react-app
-spec:
-  replicas: 3  # Number of Pods to run
-  selector:
-    matchLabels:
-      app: react-app
-  template:
-    metadata:
-      labels:
-        app: react-app
-    spec:
-      containers:
-      - name: react-app
-        image: itoncu/my-react-app:latest  # Your Docker image
-        ports:
-        - containerPort: 80  # Port where Nginx is serving the app
 apiVersion: v1
-kind: Service
+kind: Pod
 metadata:
-  name: react-app-service
+  name: react-app-pod
 spec:
-  selector:
-    app: react-app
-  type: NodePort
-  ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 3000
-      nodePort: 30080 # Use a custom port in the range 30000-32767
-
+  containers:
+    - name: react-app
+      image: itoncu/my-react-app:latest
+      ports:
+        - containerPort: 3000
