@@ -26,9 +26,10 @@ metadata:
 spec:
   selector:
     app: react-app
+  type: NodePort
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 80  # Port exposed by the container
-  type: LoadBalancer  # Use LoadBalancer if on cloud, or NodePort for local setups
+      targetPort: 3000
+      nodePort: 30080 # Use a custom port in the range 30000-32767
 
